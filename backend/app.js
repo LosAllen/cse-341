@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('./db/connect');
+const path = require('path');
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -11,13 +12,20 @@ app
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
   })
+  // Serve static files from the frontend folder
+  .use(express.static(path.join(__dirname, '../frontend')))
+  // Serve index.html for the root route
+  .get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  })
   .use('/', require('./routes'));
 
-mongodb.initDb((err, mongodb) => {
+// Initialize the database and start the server
+mongodb.initDb((err) => {
   if (err) {
     console.log(err);
   } else {
     app.listen(port);
-    console.log(`Connected to DB and listening on ${port}`);
+    console.log(`Connected to DB and listening on port ${port}`);
   }
 });
