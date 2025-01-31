@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('./db/connect');
 const path = require('path');
+const swaggerRoutes = require('./routes/swagger');
 
 const port = process.env.PORT || 8080;
 const app = express();
@@ -18,7 +19,8 @@ app
   .get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
   })
-  .use('/', require('./routes'));
+  .use('/', require('./routes'))
+  .use(swaggerRoutes);
 
 // Initialize the database and start the server
 mongodb.initDb((err) => {
