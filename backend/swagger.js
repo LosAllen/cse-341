@@ -1,34 +1,28 @@
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const express = require('express');
+const router = express.Router();
 
-// Swagger configuration
 const swaggerOptions = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Contacts API',
-            version: '1.0.0',
-            description: 'API for managing contacts',
-            contact: {
-                name: 'Lincoln Allen',
-                email: 'Lincolnjallen@gmail.com',
-            },
-        },
-        servers: [
-            {
-                url: 'http://localhost:3000',
-                description: 'Local server',
-            },
-            {
-                url: 'https://cse-341-30ua.onrender.com',
-                description: 'Production server',
-            },
-        ],
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Contacts API',
+      version: '1.0.0',
+      description: 'API for managing contacts',
     },
-    apis: ['./routes/*.js'], // Points to all route files
+    servers: [
+      {
+        url: process.env.RENDER_EXTERNAL_URL || 'http://localhost:8080',
+        description: 'Deployed Render Server',
+      },
+    ],
+  },
+  apis: ['./routes/*.js'],
 };
 
-// Initialize Swagger docs
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
-module.exports = { swaggerUi, swaggerSpec };
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+module.exports = router;

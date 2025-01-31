@@ -3,9 +3,13 @@ const bodyParser = require('body-parser');
 const mongodb = require('./db/connect');
 const path = require('path');
 const swaggerRoutes = require('./routes/swagger');
+const cors = require('cors');
 
-const port = process.env.PORT || 8080;
 const app = express();
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});
 
 app
   .use(bodyParser.json())
@@ -20,6 +24,7 @@ app
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
   })
   .use('/', require('./routes'))
+  .use(cors())
   .use(swaggerRoutes);
 
 // Initialize the database and start the server

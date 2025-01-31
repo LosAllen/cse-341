@@ -5,20 +5,185 @@
       "version": "1.0.0",
       "description": "API for managing contacts",
       "contact": {
-        "name": "Lincoln Allen",
-        "email": "Lincolnjallen@gmail.com"
+        "name": "Your Name",
+        "email": "your@email.com"
       }
     },
     "servers": [
       {
-        "url": "http://localhost:3000",
-        "description": "Local server"
+        "url": "http://localhost:8080",
+        "description": "Local Development Server"
       },
       {
         "url": "https://cse-341-30ua.onrender.com",
-        "description": "Production server"
+        "description": "Production Server"
       }
     ],
-    "paths": {}
+    "paths": {
+      "/contacts": {
+        "get": {
+          "summary": "Get all contacts",
+          "description": "Fetches all contacts from the database",
+          "responses": {
+            "200": {
+              "description": "A list of contacts",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/Contact"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new contact",
+          "description": "Adds a new contact to the database",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Contact created successfully"
+            },
+            "400": {
+              "description": "Invalid input data"
+            }
+          }
+        }
+      },
+      "/contacts/{id}": {
+        "get": {
+          "summary": "Get a contact by ID",
+          "description": "Fetches a contact by its ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "The ID of the contact"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact details",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Contact"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Contact not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a contact by ID",
+          "description": "Modifies an existing contact",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "The ID of the contact"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Contact"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Contact updated successfully"
+            },
+            "400": {
+              "description": "Invalid input data"
+            },
+            "404": {
+              "description": "Contact not found"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete a contact by ID",
+          "description": "Removes a contact from the database",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "description": "The ID of the contact"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact deleted successfully"
+            },
+            "404": {
+              "description": "Contact not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Contact": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "example": "Ashley"
+            },
+            "lastName": {
+              "type": "string",
+              "example": "Weaver"
+            },
+            "email": {
+              "type": "string",
+              "example": "aWeaver@test.com"
+            },
+            "favoriteColor": {
+              "type": "string",
+              "example": "Brown"
+            },
+            "birthday": {
+              "type": "string",
+              "format": "date",
+              "example": "2000-06-19"
+            }
+          }
+        }
+      }
+    }
   }
   
