@@ -15,9 +15,9 @@ const initDb = (callback) => {
     return callback(new Error('MONGODB_URI is not defined.'));
   }
 
-  MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, tls: true })
     .then((client) => {
-      _db = client.db(); // Use the default database from the connection string
+      _db = client.db();
       console.log('Connected to MongoDB!');
       callback(null, _db);
     })
@@ -31,7 +31,7 @@ const getDb = () => {
   if (!_db) {
     throw new Error('Database not initialized');
   }
-  return _db; // Return the database object instead of the client
+  return _db;
 };
 
 module.exports = { initDb, getDb };
