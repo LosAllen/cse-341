@@ -10,8 +10,8 @@ const swaggerOptions = {
             version: '1.0.0',
             description: 'API for managing contacts',
             contact: {
-                name: 'Your Name',
-                email: 'your@email.com',
+                name: 'Lincoln Allen',
+                email: 'Lincolnjallen@gmail.com',
             },
         },
         servers: [
@@ -20,7 +20,7 @@ const swaggerOptions = {
                 description: 'Local server',
             },
             {
-                url: 'https://your-render-url.onrender.com',
+                url: 'https://cse-341-30ua.onrender.com',
                 description: 'Production server',
             },
         ],

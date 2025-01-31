@@ -15,7 +15,7 @@
         "description": "Local server"
       },
       {
-        "url": "https://your-render-url.onrender.com",
+        "url": "https://cse-341-30ua.onrender.com",
         "description": "Production server"
       }
     ],
